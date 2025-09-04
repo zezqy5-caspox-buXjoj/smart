@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mentorship Under 40 - Dr. Kusi-Boadum</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, #8B2CF5 0%, #E91E63 100%);
+            color: white;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-circle {
+            width: 50px;
+            height: 50px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #8B2CF5;
+            font-size: 1.2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+        }
+
+        .nav-links a:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #8B2CF5 0%, #E91E63 50%, #FF6B35 100%);
+            color: white;
+            padding: 120px 0 80px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="80" cy="80" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="40" cy="60" r="1.5" fill="rgba(255,255,255,0.08)"/></svg>');
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #fff, #f0f0f0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            animation: slideInUp 1s ease-out;
+        }
+
+        .hero .subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            animation: slideInUp 1s ease-out 0.3s both;
+        }
+
+        .cta-button {
+            background: linear-gradient(45deg, #FF6B35, #F7931E);
+            color: white;
+            padding: 1rem 2.5rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(255, 107, 53, 0.4);
+            animation: slideInUp 1s ease-out 0.6s both;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 12px 35px rgba(255, 107, 53, 0.6);
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* About Section */
+        .about {
+            padding: 80px 0;
+            background: #f8f9fa;
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .mentor-image {
+            width: 100%;
+            max-width: 400px;
+            height: 400px;
+            border-radius: 20px;
+            object-fit: cover;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .mentor-image:hover {
+            transform: scale(1.05) rotate(2deg);
+        }
+
+        .about-text h2 {
+            font-size: 2.5rem;
+            color: #8B2CF5;
+            margin-bottom: 1rem;
+        }
+
+        .about-text p {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            color: #666;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 80px 0;
+            background: white;
+        }
+
+        .features h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            color: #8B2CF5;
+            margin-bottom: 3rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(139, 44, 245, 0.1);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(139, 44, 245, 0.1);
+            background: linear-gradient(135deg, #8B2CF5 0%, #E91E63 100%);
+            color: white;
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            color: #8B2CF5;
+            margin-bottom: 1rem;
+            transition: color 0.3s ease;
+        }
+
+        .feature-card:hover .feature-icon {
+            color: white;
+        }
+
+        /* Registration Form */
+        .registration {
+            padding: 80px 0;
+            background: linear-gradient(135deg, #8B2CF5 0%, #E91E63 100%);
+            color: white;
+        }
+
+        .registration h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .form-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            background: white;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+            transform: scale(1.02);
+        }
+
+        .submit-btn {
+            width: 100%;
+            background: linear-gradient(45deg, #FF6B35, #F7931E);
+            color: white;
+            padding: 1rem;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(255, 107, 53, 0.4);
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 80px 0;
+            background: #f8f9fa;
+            text-align: center;
+        }
+
+        .contact h2 {
+            font-size: 2.5rem;
+            color: #8B2CF5;
+            margin-bottom: 2rem;
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.1rem;
+            color: #666;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .social-link {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #8B2CF5 0%, #E91E63 100%);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            transform: translateY(-3px) scale(1.1);
+            box-shadow: 0 10px 25px rgba(139, 44, 245, 0.3);
+        }
+
+        /* Footer */
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .about-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .contact-info {
+                flex-direction: column;
+            }
+        }
+
+        /* Success Message */
+        .success-message {
+            background: linear-gradient(135deg, #28a745, #20c997);
+            color: white;
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            display: none;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+        }
+
+        .spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top: 4px solid white;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <div class="logo">
+                <img src="mentorship-1.png" alt="Mentorship 1 Logo" style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover; background: white;">
+                <div>
+                    <div style="font-weight: bold;">KUSI-BOADUM</div>
+                    <div style="font-size: 0.8rem; opacity: 0.8;">MINISTRIES</div>
+                </div>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#features">Program</a></li>
+                <li><a href="#register">Register</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="home" class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <h1>MENTORSHIP<br>UNDER <span style="color: #FF6B35;">40</span></h1>
+                    <p class="subtitle">Transform Your Life with Expert Guidance from Dr. Kusi-Boadum</p>
+                    <a href="#register" class="cta-button">
+                        <i class="fas fa-rocket"></i> Register Now!
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="about">
+            <div class="container">
+                <div class="about-content">
+                    <div>
+                        <img src="daddy.png"
+                             alt="Dr. Kusi-Boadum" class="mentor-image">
+                    </div>
+                    <div class="about-text">
+                        <h2>Meet Dr. Kusi-Boadum</h2>
+                        <p>A visionary leader and mentor dedicated to empowering the next generation of leaders under 40. With years of experience in ministry, leadership development, and personal transformation, Dr. Kusi-Boadum has guided thousands towards their purpose and potential.</p>
+                        <p>This exclusive mentorship program is designed to unlock your God-given potential, develop your leadership skills, and position you for extraordinary impact in your generation.</p>
+                        <div style="margin-top: 2rem;">
+                            <i class="fas fa-phone" style="color: #8B2CF5; margin-right: 0.5rem;"></i>
+                            <strong>+233 24 294 6748</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="features" class="features">
+            <div class="container">
+                <h2>What You'll Get</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h3>Personal Mentorship</h3>
+                        <p>One-on-one guidance tailored to your unique journey and goals</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3>Leadership Development</h3>
+                        <p>Proven strategies to enhance your leadership capabilities and influence</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-lightbulb"></i>
+                        </div>
+                        <h3>Purpose Discovery</h3>
+                        <p>Uncover your divine calling and align your life with your purpose</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-network-wired"></i>
+                        </div>
+                        <h3>Network Building</h3>
+                        <p>Connect with like-minded individuals and build meaningful relationships</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-trophy"></i>
+                        </div>
+                        <h3>Success Strategies</h3>
+                        <p>Time-tested principles for achieving excellence in every area of life</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-pray"></i>
+                        </div>
+                        <h3>Spiritual Growth</h3>
+                        <p>Deepen your relationship with God and discover His plan for your life</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="register" class="registration">
+            <div class="container">
+                <h2>Register Now</h2>
+                <div class="form-container">
+                    <div id="successMessage" class="success-message">
+                        <i class="fas fa-check-circle"></i>
+                        Thank you for your registration! We'll contact you soon.
+                    </div>
+                    
+                    <div id="loading" class="loading">
+                        <div class="spinner"></div>
+                        <p>Submitting your registration...</p>
+                    </div>
+                    
+                    <form id="registrationForm">
+                        <div class="form-group">
+                            <label for="fullName">Full Name *</label>
+                            <input type="text" id="fullName" name="fullName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email Address *</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number *</label>
+                            <input type="tel" id="phone" name="phone" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="age">Age *</label>
+                            <select id="age" name="age" required>
+                                <option value="">Select your age range</option>
+                                <option value="18-25">18-25</option>
+                                <option value="26-30">26-30</option>
+                                <option value="31-35">31-35</option>
+                                <option value="36-40">36-40</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="occupation">Current Occupation</label>
+                            <input type="text" id="occupation" name="occupation">
+                        </div>
+                        <div class="form-group">
+                            <label for="goals">What are your main goals for this mentorship? *</label>
+                            <textarea id="goals" name="goals" rows="4" required 
+                                placeholder="Share your aspirations and what you hope to achieve..."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="experience">Previous leadership or ministry experience</label>
+                            <textarea id="experience" name="experience" rows="3" 
+                                placeholder="Tell us about your background (optional)..."></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn">
+                            <i class="fas fa-paper-plane"></i> Submit Registration
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="contact">
+            <div class="container">
+                <h2>Get In Touch</h2>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <span>+233 24 294 6748</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <span>info@kusiboadumministries.com</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Accra, Ghana</span>
+                    </div>
+                </div>
+                
+                <div class="social-links">
+                    <a href="#" class="social-link" title="Facebook">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" class="social-link" title="Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="#" class="social-link" title="Twitter">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" class="social-link" title="YouTube">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Kusi-Boadum Ministries. All rights reserved. | Empowering the Next Generation</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Form submission
+        document.getElementById('registrationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData);
+            
+            // Show loading state
+            document.getElementById('loading').style.display = 'block';
+            this.style.display = 'none';
+            
+            // Send data to Node.js backend
+            fetch('/api/registration', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(result => {
+                // Hide loading
+                document.getElementById('loading').style.display = 'none';
+                
+                if (result.success) {
+                    // Show success message
+                    document.getElementById('successMessage').style.display = 'block';
+                    document.getElementById('successMessage').innerHTML = 
+                        '<i class="fas fa-check-circle"></i> ' + result.message;
+                    
+                    // Reset form after 3 seconds
+                    setTimeout(() => {
+                        this.reset();
+                        this.style.display = 'block';
+                        document.getElementById('successMessage').style.display = 'none';
+                    }, 3000);
+                } else {
+                    // Show error message
+                    alert('Registration failed: ' + result.message);
+                    this.style.display = 'block';
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('loading').style.display = 'none';
+                alert('Registration failed. Please try again.');
+                this.style.display = 'block';
+            });
+        });
+
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.background = 'linear-gradient(135deg, rgba(139, 44, 245, 0.95) 0%, rgba(233, 30, 99, 0.95) 100%)';
+            } else {
+                header.style.background = 'linear-gradient(135deg, #8B2CF5 0%, #E91E63 100%)';
+            }
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe feature cards
+        document.querySelectorAll('.feature-card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(30px)';
+            card.style.transition = 'all 0.6s ease';
+            observer.observe(card);
+        });
+    </script>
+</body>
+</html>

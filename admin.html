@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Mentorship Registrations</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #f4f6f8;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #8B2CF5 0%, #E91E63 100%);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+        
+        .login-form {
+            max-width: 400px;
+            margin: 2rem auto;
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        
+        .btn {
+            background: linear-gradient(135deg, #8B2CF5 0%, #E91E63 100%);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            text-decoration: none;
+            display: inline-block;
+            margin: 0.25rem;
+        }
+        
+        .btn:hover {
+            opacity: 0.9;
+        }
+        
+        .btn-secondary {
+            background: #6c757d;
+        }
+        
+        .btn-danger {
+            background: #dc3545;
+        }
+        
+        .btn-success {
+            background: #28a745;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #8B2CF5;
+        }
+        
+        .registrations-table {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+        
+        th {
+            background: #f8f9fa;
+            font-weight: bold;
+        }
+        
+        .logout-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+        
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 1rem;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+        }
+        
+        .success {
+            background: #d4edda;
+            color: #155724;
+            padding: 1rem;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+        }
+        
+        .controls {
+            margin-bottom: 1rem;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        
+        .search-box {
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            min-width: 200px;
+        }
+        
+        .status-filter {
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+        
+        .pagination button {
+            padding: 0.5rem 1rem;
+            border: 1px solid #ddd;
+            background: white;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        
+        .pagination button.active {
+            background: #8B2CF5;
+            color: white;
+            border-color: #8B2CF5;
+        }
+        
+        .pagination button:hover:not(.active) {
+            background: #f8f9fa;
+        }
+        
+        @media (max-width: 768px) {
+            .stats {
+                grid-template-columns: 1fr;
+            }
+            
+            table {
+                font-size: 0.9rem;
+            }
+            
+            th, td {
+                padding: 0.5rem;
+            }
+            
+            .controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+        }
+        
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="loginSection">
+        <div class="container">
+            <div class="header">
+                <h1><i class="fas fa-lock"></i> Admin Login</h1>
+                <p>Mentorship Under 40 - Admin Panel</p>
+            </div>
+            
+            <div id="loginError" class="error hidden"></div>
+            
+            <form class="login-form" id="loginForm">
+                <div class="form-group">
+                    <label for="password">Admin Password</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <button type="submit" class="btn">
+                    <i class="fas fa-sign-in-alt"></i> Login
+                </button>
+            </form>
+        </div>
+    </div>
+    
+    <div id="dashboardSection" class="hidden">
+        <div class="header">
+            <h1><i class="fas fa-chart-line"></i> Admin Dashboard</h1>
+            <p>Mentorship Under 40 - Registrations</p>
+            <button id="logoutBtn" class="logout-btn">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+        </div>
+        
+        <div class="container">
+            <div id="dashboardError" class="error hidden"></div>
+            <div id="dashboardSuccess" class="success hidden"></div>
+            
+            <!-- Statistics -->
+            <div class="stats" id="statsSection">
+                <div class="stat-card">
+                    <div class="stat-number" id="totalRegistrations">0</div>
+                    <div>Total Registrations</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="todayRegistrations">0</div>
+                    <div>Today's Registrations</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="thisMonthRegistrations">0</div>
+                    <div>This Month</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="pendingRegistrations">0</div>
+                    <div>Pending</div>
+                </div>
+            </div>
+            
+            <!-- Controls -->
+            <div class="controls">
+                <input type="text" id="searchBox" class="search-box" placeholder="Search by name or email...">
+                <select id="statusFilter" class="status-filter">
+                    <option value="all">All Status</option>
+                    <option value="pending">Pending</option>
+                    <option value="approved">Approved</option>
+                    <option value="rejected">Rejected</option>
+                </select>
+                <button id="exportBtn" class="btn">
+                    <i class="fas fa-download"></i> Export CSV
+                </button>
+                <button id="refreshBtn" class="btn">
+                    <i class="fas fa-sync-alt"></i> Refresh
+                </button>
+            </div>
+            
+            <!-- Registrations Table -->
+            <div class="registrations-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Age</th>
+                            <th>Occupation</th>
+                            <th>Goals</th>
+                            <th>Status</th>
+                            <th>Date</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="registrationsTableBody">
+                        <tr>
+                            <td colspan="9" style="text-align: center; padding: 2rem;">
+                                Loading registrations...
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Pagination -->
+            <div class="pagination" id="paginationSection"></div>
+        </div>
+    </div>
+    
+    <script>
+        let authToken = localStorage.getItem('adminToken');
+        let currentPage = 1;
+        let totalPages = 1;
+        let currentLimit = 20;
+        
+        // Check if already logged in
+        if (authToken) {
+            showDashboard();
+        }
+        
+        // Login form handler
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const password = document.getElementById('password').value;
+            
+            try {
+                const response = await fetch('/api/admin/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ password })
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    authToken = result.token;
+                    localStorage.setItem('adminToken', authToken);
+                    showDashboard();
+                } else {
+                    showError('loginError', result.message);
+                }
+                
+            } catch (error) {
+                showError('loginError', 'Login failed. Please try again.');
+            }
+        });
+        
+        // Logout handler
+        document.getElementById('logoutBtn').addEventListener('click', function() {
+            localStorage.removeItem('adminToken');
+            authToken = null;
+            showLogin();
+        });
+        
+        // Show dashboard
+        function showDashboard() {
+            document.getElementById('loginSection').classList.add('hidden');
+            document.getElementById('dashboardSection').classList.remove('hidden');
+            loadStats();
+            loadRegistrations();
+        }
+        
+        // Show login
+        function showLogin() {
+            document.getElementById('dashboardSection').classList.add('hidden');
+            document.getElementById('loginSection').classList.remove('hidden');
+            document.getElementById('password').value = '';
+        }
+        
+        // Show error message
+        function showError(elementId, message) {
+            const element = document.getElementById(elementId);
+            element.textContent = message;
+            element.classList.remove('hidden');
+            setTimeout(() => element.classList.add('hidden'), 5000);
+        }
+        
+        // Show success message
+        function showSuccess(message) {
+            const element = document.getElementById('dashboardSuccess');
+            element.textContent = message;
+            element.classList.remove('hidden');
+            setTimeout(() => element.classList.add('hidden'), 3000);
+        }
+        
+        // Load statistics
+        async function loadStats() {
+            try {
+                const response = await fetch('/api/admin/stats', {
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`
+                    }
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    const stats = result.data;
+                    document.getElementById('totalRegistrations').textContent = stats.total;
+                    document.getElementById('todayRegistrations').textContent = stats.today;
+                    document.getElementById('thisMonthRegistrations').textContent = stats.thisMonth;
+                    document.getElementById('pendingRegistrations').textContent = stats.pending;
+                }
+                
+            } catch (error) {
+                console.error('Failed to load stats:', error);
+            }
+        }
+        
+        // Load registrations
+        async function loadRegistrations() {
+            try {
+                const search = document.getElementById('searchBox').value;
+                const status = document.getElementById('statusFilter').value;
+                
+                let url = `/api/admin/registrations?page=${currentPage}&limit=${currentLimit}`;
+                if (status !== 'all') url += `&status=${status}`;
+                if (search) url += `&search=${encodeURIComponent(search)}`;
+                
+                const response = await fetch(url, {
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`
+                    }
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    displayRegistrations(result.data.registrations);
+                    updatePagination(result.data.pagination);
+                } else {
+                    showError('dashboardError', result.message);
+                }
+                
+            } catch (error) {
+                console.error('Failed to load registrations:', error);
+                showError('dashboardError', 'Failed to load registrations');
+            }
+        }
+        
+        // Display registrations in table
+        function displayRegistrations(registrations) {
+            const tbody = document.getElementById('registrationsTableBody');
+            
+            if (registrations.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="9" style="text-align: center; padding: 2rem;">No registrations found</td></tr>';
+                return;
+            }
+            
+            tbody.innerHTML = registrations.map(reg => `
+                <tr>
+                    <td>${escapeHtml(reg.fullName)}</td>
+                    <td>${escapeHtml(reg.email)}</td>
+                    <td>${escapeHtml(reg.phone)}</td>
+                    <td>${escapeHtml(reg.age)}</td>
+                    <td>${escapeHtml(reg.occupation || 'N/A')}</td>
+                    <td>${escapeHtml(reg.goals.length > 50 ? reg.goals.substring(0, 50) + '...' : reg.goals)}</td>
+                    <td>
+                        <select class="status-select" data-id="${reg._id}" onchange="updateStatus('${reg._id}', this.value)">
+                            <option value="pending" ${reg.status === 'pending' ? 'selected' : ''}>Pending</option>
+                            <option value="approved" ${reg.status === 'approved' ? 'selected' : ''}>Approved</option>
+                            <option value="rejected" ${reg.status === 'rejected' ? 'selected' : ''}>Rejected</option>
+                        </select>
+                    </td>
+                    <td>${new Date(reg.createdAt).toLocaleDateString()}</td>
+                    <td>
+                        <button class="btn btn-secondary" onclick="viewRegistration('${reg._id}')">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                        <button class="btn btn-danger" onclick="deleteRegistration('${reg._id}')">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+        
+        // Update pagination
+        function updatePagination(pagination) {
+            const paginationSection = document.getElementById('paginationSection');
+            totalPages = pagination.totalPages;
+            currentPage = pagination.currentPage;
+            
+            let paginationHTML = '';
+            
+            // Previous button
+            if (currentPage > 1) {
+                paginationHTML += `<button onclick="goToPage(${currentPage - 1})">Previous</button>`;
+            }
+            
+            // Page numbers
+            for (let i = 1; i <= totalPages; i++) {
+                if (i === currentPage) {
+                    paginationHTML += `<button class="active">${i}</button>`;
+                } else {
+                    paginationHTML += `<button onclick="goToPage(${i})">${i}</button>`;
+                }
+            }
+            
+            // Next button
+            if (currentPage < totalPages) {
+                paginationHTML += `<button onclick="goToPage(${currentPage + 1})">Next</button>`;
+            }
+            
+            paginationSection.innerHTML = paginationHTML;
+        }
+        
+        // Go to specific page
+        function goToPage(page) {
+            currentPage = page;
+            loadRegistrations();
+        }
+        
+        // Update registration status
+        async function updateStatus(id, status) {
+            try {
+                const response = await fetch(`/api/admin/registrations/${id}/status`, {
+                    method: 'PATCH',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${authToken}`
+                    },
+                    body: JSON.stringify({ status })
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    showSuccess('Status updated successfully');
+                    loadStats(); // Refresh stats
+                } else {
+                    showError('dashboardError', result.message);
+                }
+                
+            } catch (error) {
+                console.error('Failed to update status:', error);
+                showError('dashboardError', 'Failed to update status');
+            }
+        }
+        
+        // View registration details
+        function viewRegistration(id) {
+            // Implement modal or redirect to detail page
+            alert('View registration details - ID: ' + id);
+        }
+        
+        // Delete registration
+        async function deleteRegistration(id) {
+            if (!confirm('Are you sure you want to delete this registration?')) {
+                return;
+            }
+            
+            try {
+                const response = await fetch(`/api/admin/registrations/${id}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`
+                    }
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    showSuccess('Registration deleted successfully');
+                    loadRegistrations();
+                    loadStats();
+                } else {
+                    showError('dashboardError', result.message);
+                }
+                
+            } catch (error) {
+                console.error('Failed to delete registration:', error);
+                showError('dashboardError', 'Failed to delete registration');
+            }
+        }
+        
+        // Export CSV
+        document.getElementById('exportBtn').addEventListener('click', async function() {
+            try {
+                const search = document.getElementById('searchBox').value;
+                const status = document.getElementById('statusFilter').value;
+                
+                let url = `/api/admin/export?`;
+                if (status !== 'all') url += `status=${status}`;
+                if (search) url += `&search=${encodeURIComponent(search)}`;
+                
+                const response = await fetch(url, {
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`
+                    }
+                });
+                
+                if (response.ok) {
+                    const blob = await response.blob();
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `mentorship_registrations_${new Date().toISOString().split('T')[0]}.csv`;
+                    document.body.appendChild(a);
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+                    document.body.removeChild(a);
+                } else {
+                    showError('dashboardError', 'Export failed');
+                }
+                
+            } catch (error) {
+                console.error('Export failed:', error);
+                showError('dashboardError', 'Export failed');
+            }
+        });
+        
+        // Refresh button
+        document.getElementById('refreshBtn').addEventListener('click', function() {
+            loadRegistrations();
+            loadStats();
+        });
+        
+        // Search and filter handlers
+        document.getElementById('searchBox').addEventListener('input', debounce(function() {
+            currentPage = 1;
+            loadRegistrations();
+        }, 500));
+        
+        document.getElementById('statusFilter').addEventListener('change', function() {
+            currentPage = 1;
+            loadRegistrations();
+        });
+        
+        // Utility functions
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+        
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+    </script>
+</body>
+</html>
